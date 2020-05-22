@@ -31,7 +31,7 @@ resource "src-git": {
 
 resource "docker-image": {
   type: "image"
-  param url: docker_user + "/lottery-order:$(context.build.name)"
+  param url: "/lottery-order:$(context.build.name)"
   param digest: "$(inputs.resources.docker-image.digest)"
 }
 
@@ -131,7 +131,7 @@ task "build": {
     },
     {
       name: "mvn-verify"
-      image: "maven:3.6-jdk-8-slim"
+      image: "maven:3.6-jdk-8-sinodata"
       command: [ "mvn", "verify" ]
       workingDir: "/workspace/src-git"
       volumeMounts: [
