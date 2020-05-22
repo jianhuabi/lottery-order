@@ -10,9 +10,8 @@ ADD docker-entrypoint.sh /docker-entrypoint.sh
 WORKDIR ${APP_HOME}
 ENV TZ=Asia/Shanghai LANG=C.UTF-8 LANGUAGE=C.UTF-8 LC_ALL=C.UTF-8 _JAVA_OPTIONS='-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005'
 
-RUN apk upgrade --update && apk add su-exec && \
-        sh -c 'touch ${APP_HOME}/${APP_JAR}' && \
+RUN  sh -c 'touch ${APP_HOME}/${APP_JAR}' && \
         chmod a+x /docker-entrypoint.sh
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
-EXPOSE 8090 5005 9090
+EXPOSE 8080 5005 9090

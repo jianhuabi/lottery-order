@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lottery-order-app
+spec:
+  selector:
+    matchLabels:
+      app: lottery-order-app
+  template:
+    metadata:
+      labels:
+        app: lottery-order-app
+    spec:
+      containers:
+        - name: app
+          image: 10.6.136.80:443/lottery-order:t2
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          volumeMounts:
+            - name: lotteryorder-config
+              mountPath: /config
+      volumes:
+        - name: "lotteryorder-config"
+          configMap:
+            name: "lotteryorder-configmap"

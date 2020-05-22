@@ -1,0 +1,18 @@
+# Adds namespace to all resources.
+namespace: cjh
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+resources:
+  - ../../base/
+
+patchesStrategicMerge:
+  - lotteryorder-configmap.yaml
+  - memorylimit_patch.yaml
+  - healthcheck_patch.yaml
+
+configMapGenerator:
+- name: lotteryorder-configmap
+  files:
+  - application.yml
