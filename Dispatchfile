@@ -3,25 +3,35 @@ docker_user: "10.6.136.80:443/library/"
 
 common_env: [
   {
-    name: "PLUGIN_PATH_STYLE"
-    value: "true"
-  },
-  {
-    name: "PLUGIN_MOUNT"
-    value: "/root/.m2"
-  },
-  {
-    name: "PLUGIN_BUCKET"
-    value: "artifacts"
-  },
-  {
-    name: "PLUGIN_ENDPOINT"
-    value: "http://s3-us-east-1.dispatch"
-  },
-  {
-    name: "PLUGIN_REGION"
-    value: "us-east-1"
-  },...
+      name: "AWS_ACCESS_KEY_ID"
+      valueFrom secretKeyRef name: "s3-config"
+      valueFrom secretKeyRef key: "AWS_ACCESS_KEY_ID"
+    },
+    {
+      name: "AWS_SECRET_ACCESS_KEY"
+      valueFrom secretKeyRef name: "s3-config"
+      valueFrom secretKeyRef key: "AWS_SECRET_ACCESS_KEY"
+    },
+    {
+      name: "PLUGIN_PATH_STYLE"
+      value: "true"
+    },
+    {
+      name: "PLUGIN_MOUNT"
+      value: "/root/.m2"
+    },
+    {
+      name: "PLUGIN_BUCKET"
+      value: "artifacts"
+    },
+    {
+      name: "PLUGIN_ENDPOINT"
+      value: "http://s3-us-east-1.dispatch"
+    },
+    {
+      name: "PLUGIN_REGION"
+      value: "us-east-1"
+    },...
 ]
 
 resource "src-git": {
