@@ -1,6 +1,6 @@
 FROM openjdk:8-jre-alpine
 
-ENV APP_JAR_NAME lottery-web
+ENV APP_JAR_NAME lottery-order
 ENV APP_HOME /opt/${APP_JAR_NAME}
 ENV APP_JAR ${APP_JAR_NAME}.jar
 
