@@ -4,10 +4,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.sinodata</groupId>
-    <artifactId>order</artifactId>
+    <artifactId>lottery-order</artifactId>
     <version>0.0.1</version>
     <packaging>jar</packaging>
-    <name>order</name>
+    <name>lottery-order</name>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -242,6 +242,7 @@
         </dependencies>
     </dependencyManagement>
     <build>
+        <finalName>${project.name}</finalName>
         <pluginManagement>
             <plugins>
                 <plugin>
