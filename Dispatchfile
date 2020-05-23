@@ -59,7 +59,7 @@ task "test": {
   steps: [
     {
       name: "restore-cache"
-      image: "meltwater/drone-cache"
+      image: docker_user+"meltwater/drone-cache"
       env: common_env +
       [
         {
@@ -76,7 +76,7 @@ task "test": {
     },
     {
       name: "test"
-      image: "maven:3.6-jdk-8-sinodata"
+      image: docker_user+"maven:3.6-jdk-8-sinodata"
       command: [ "mvn", "test" ]
       workingDir: "/workspace/src-git"
       volumeMounts: [
@@ -88,7 +88,7 @@ task "test": {
     },
     {
       name: "rebuild-cache"
-      image: "meltwater/drone-cache"
+      image: docker_user+"meltwater/drone-cache"
       env: common_env +
       [
         {
@@ -125,7 +125,7 @@ task "build": {
   steps: [
     {
           name: "restore-cache"
-          image: "meltwater/drone-cache"
+          image: docker_user+"meltwater/drone-cache"
           env: common_env +
           [
             {
@@ -142,7 +142,7 @@ task "build": {
     },
     {
       name: "mvn-verify"
-      image: "maven:3.6-jdk-8-sinodata"
+      image: docker_user+"maven:3.6-jdk-8-sinodata"
       command: [ "mvn", "verify" ]
       workingDir: "/workspace/src-git"
       volumeMounts: [
@@ -154,7 +154,7 @@ task "build": {
     },
     {
           name: "rebuild-cache"
-          image: "meltwater/drone-cache"
+          image: docker_user+"meltwater/drone-cache"
           env: common_env +
           [
             {
@@ -176,7 +176,7 @@ task "build": {
     },
     {
       name: "build-image"
-      image: "gcr.io/kaniko-project/executor:v0.14.0"
+      image: "10.6.136.80:443/gcr.io/kaniko-project/executor:v0.14.0"
       workingDir: "/workspace/src-git"
       volumeMounts: [
         {
