@@ -60,6 +60,7 @@ task "test": {
     {
       name: "restore-cache"
       image: "meltwater/drone-cache"
+      command: ["/bin/drone-cache"]
       env: common_env +
       [
         {
@@ -89,6 +90,7 @@ task "test": {
     {
       name: "rebuild-cache"
       image: "meltwater/drone-cache"
+      command: ["/bin/drone-cache"]
       env: common_env +
       [
         {
@@ -126,6 +128,7 @@ task "build": {
     {
           name: "restore-cache"
           image: "meltwater/drone-cache"
+          command: ["/bin/drone-cache"]
           env: common_env +
           [
             {
@@ -155,6 +158,7 @@ task "build": {
     {
           name: "rebuild-cache"
           image: "meltwater/drone-cache"
+          command: ["/bin/drone-cache"]
           env: common_env +
           [
             {
