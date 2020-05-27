@@ -142,7 +142,7 @@ task "build": {
     },
     {
       name: "mvn-verify"
-      image: "maven:3.6-jdk-8-sinodata"
+      image: "maven:3.6-jdk-8"
       command: [ "mvn", "verify" ]
       workingDir: "/workspace/src-git"
       volumeMounts: [
