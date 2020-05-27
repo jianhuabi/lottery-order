@@ -76,7 +76,7 @@ task "test": {
     },
     {
       name: "test"
-      image: "maven:3.6-jdk-8"
+      image: "maven:3.6-jdk-8-slim"
       command: [ "mvn", "test" ]
       workingDir: "/workspace/src-git"
       volumeMounts: [
@@ -142,7 +142,7 @@ task "build": {
     },
     {
       name: "mvn-verify"
-      image: "maven:3.6-jdk-8"
+      image: "maven:3.6-jdk-8-slim"
       command: [ "mvn", "verify" ]
       workingDir: "/workspace/src-git"
       volumeMounts: [
