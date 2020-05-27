@@ -188,6 +188,7 @@ task "build": {
           mountPath: "/root/.m2"
         }
       ]
+      command: ["/kaniko/executor"]
       args: [
         "--destination=$(outputs.resources.docker-image.url)",
         "--context=/workspace/src-git",
