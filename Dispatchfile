@@ -1,5 +1,5 @@
 #!cue
-docker_user: "10.6.136.80:443/library/"
+docker_user: "michaelbi"
 
 common_env: [
   {
@@ -42,7 +42,7 @@ resource "src-git": {
 
 resource "docker-image": {
   type: "image"
-  param url: docker_user+"lottery-order:$(context.build.name)"
+  param url: docker_user+"/lottery-order:$(context.build.name)"
   param digest: "$(inputs.resources.docker-image.digest)"
 }
 
@@ -60,6 +60,7 @@ task "test": {
     {
       name: "restore-cache"
       image: "meltwater/drone-cache"
+      command: ["/bin/drone-cache"]
       env: common_env +
       [
         {
@@ -76,7 +77,7 @@ task "test": {
     },
     {
       name: "test"
-      image: "maven:3.6-jdk-8-sinodata"
+      image: "maven:3.6-jdk-8-slim"
       command: [ "mvn", "test" ]
       workingDir: "/workspace/src-git"
       volumeMounts: [
@@ -89,6 +90,7 @@ task "test": {
     {
       name: "rebuild-cache"
       image: "meltwater/drone-cache"
+      command: ["/bin/drone-cache"]
       env: common_env +
       [
         {
@@ -126,6 +128,7 @@ task "build": {
     {
           name: "restore-cache"
           image: "meltwater/drone-cache"
+          command: ["/bin/drone-cache"]
           env: common_env +
           [
             {
@@ -142,7 +145,7 @@ task "build": {
     },
     {
       name: "mvn-verify"
-      image: "maven:3.6-jdk-8-sinodata"
+      image: "maven:3.6-jdk-8-slim"
       command: [ "mvn", "verify" ]
       workingDir: "/workspace/src-git"
       volumeMounts: [
@@ -155,6 +158,7 @@ task "build": {
     {
           name: "rebuild-cache"
           image: "meltwater/drone-cache"
+          command: ["/bin/drone-cache"]
           env: common_env +
           [
             {
@@ -184,6 +188,7 @@ task "build": {
           mountPath: "/root/.m2"
         }
       ]
+      command: ["/kaniko/executor"]
       args: [
         "--destination=$(outputs.resources.docker-image.url)",
         "--context=/workspace/src-git",
@@ -200,9 +205,27 @@ task "build": {
   ]
 }
 
+task "deploy": {
+  inputs: ["docker-image", "gitops-git"]
+  steps: [
+    {
+      name: "update-gitops-repo"
+      image: "mesosphere/update-gitops-repo:v1.0" 
+      workingDir: "/workspace/gitops-git"
+      command: ["/usr/bin/update-gitops-repo"]
+      args: [
+        "-git-revision=$(context.git.commit)",
+        "-substitute=imageName=" + docker_user + "/lottery-order@$(inputs.resources.docker-image.digest)",
+        "--force-push"
+      ]
+    }
+  ]
+}
+
+
 actions: [
   {
-    tasks: ["build"]
+    tasks: ["build", "deploy"]
     on push: {
       branches: ["master"]
     }
