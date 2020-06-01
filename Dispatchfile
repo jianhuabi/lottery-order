@@ -77,11 +77,7 @@ task "test": {
     },
     {
       name: "test"
-<<<<<<< HEAD
       image: "maven:3.6-jdk-8-slim"
-=======
-      image: "maven:3.6-jdk-8"
->>>>>>> add feature-4
       command: [ "mvn", "test" ]
       workingDir: "/workspace/src-git"
       volumeMounts: [
